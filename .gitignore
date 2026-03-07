@@ -1,0 +1,15 @@
+# Compiled binaries
+gol_serial
+gol_serial.exe
+gol_openmp
+gol_openmp.exe
+gol_mpi
+gol_mpi.exe
+gol_cuda
+gol_cuda.exe
+gol_hybrid
+gol_hybrid.exe
+
+# Object files
+*.o
+*.obj
