@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 # Conway's Game of Life: HPC Implementations
 
 This project implements Conway's Game of Life utilizing various High Performance Computing (HPC) technologies.
-
-**Course:** EC7207
-**Group:** 32
 
 ## Project Structure
 
@@ -70,5 +66,3 @@ A `benchmark.sh` script is provided in the root directory to automatically build
 bash benchmark.sh
 ```
 =======
-# updated
->>>>>>> 89527cab375d5e3243c7cd4f8ecb9795347d34fa
