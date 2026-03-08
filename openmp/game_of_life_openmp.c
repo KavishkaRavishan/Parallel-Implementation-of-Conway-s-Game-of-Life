@@ -18,7 +18,7 @@
 unsigned char* allocate_grid(int rows, int cols) {
     unsigned char *grid = (unsigned char*)calloc(rows * cols, sizeof(unsigned char));
     if (grid == NULL) {
-        fprintf(stderr, "Error allocating memory for grid.\n");
+        fprintf(stderr, "Errors allocating memory for grid.\n");
         exit(1);
     }
     return grid;
