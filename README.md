@@ -2,7 +2,7 @@
 
 This project implements Conway's Game of Life utilizing various High Performance Computing (HPC) technologies.
 
-## Project Structure
+## Project Structures
 
 *   `serial/`: Contains the baseline serial (single-threaded) implementation.
 *   `openmp/`: Contains the OpenMP shared-memory parallel implementation.
