@@ -28,21 +28,31 @@ void initialize_grid(unsigned char *grid, int global_start_row, int local_rows, 
     // Initialize local rows (index 1 to local_rows)
     for (int i = 1; i <= local_rows; i++) {
         for (int j = 0; j < cols; j++) {
-            grid[i * cols + j] = rand() % 2;
+            grid[i * cols + j] = (rand() % 10 < 3) ? 1 : 0;
         }
     }
 }
 
 // Function to print the grid to the terminal (only called by rank 0)
 void print_grid(unsigned char *grid, int rows, int cols, int gen) {
-    printf("\033[H\033[J");
-    printf("Generation: %d (MPI)\n", gen);
+    // Move cursor to home (top-left)
+    printf("\033[H");
+    
+    int live_count = 0;
+    for (int i = 0; i < rows * cols; i++) {
+        if (grid[i] == 1) live_count++;
+    }
+
+    printf("Generation: %d | Live Cells: %d (MPI)          \n", gen, live_count);
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            printf("%s", grid[i * cols + j] ? "█" : " ");
+            fputs(grid[i * cols + j] ? "█" : " ", stdout);
         }
-        printf("\n");
+        putchar('\n');
     }
+    // Clear from cursor to end of screen
+    printf("\033[J");
+    fflush(stdout);
 }
 
 // Function to compute the next generation
@@ -162,6 +172,11 @@ int main(int argc, char *argv[]) {
 
     // Start timing
     MPI_Barrier(MPI_COMM_WORLD);
+
+    if (visual && rank == 0) {
+        printf("\033[2J"); // Initial screen clear
+    }
+
     double start_time = MPI_Wtime();
 
     for (int g = 0; g < gens; g++) {
@@ -172,7 +187,7 @@ int main(int argc, char *argv[]) {
                         0, MPI_COMM_WORLD);
             if (rank == 0) {
                 print_grid(full_grid, rows, cols, g);
-                usleep(100000);
+                usleep(200000);
             }
         }
 
