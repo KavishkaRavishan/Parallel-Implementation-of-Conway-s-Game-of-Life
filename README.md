@@ -2,11 +2,7 @@
 
 This project implements Conway's Game of Life utilizing various High Performance Computing (HPC) technologies.
 
-<<<<<<< HEAD
 ## Project Structure
-=======
-## Project Structures
->>>>>>> 96aff32808efcc97c71ba406c274c3827faa3559
 
 *   `serial/`: Contains the baseline serial (single-threaded) implementation.
 *   `openmp/`: Contains the OpenMP shared-memory parallel implementation.
@@ -34,6 +30,30 @@ A top-level `Makefile` is provided to orchestrate the build process.
 All implementations follow a similar command-line structure:
 `./executable [rows] [cols] [generations] [threads (if applicable)] [flags]`
 
+### Build Commands
+
+Use the top-level `Makefile` from the project root:
+
+```bash
+make serial
+make openmp
+make mpi
+make cuda
+make hybrid
+make all
+make clean
+```
+
+You can also build inside each technique folder:
+
+```bash
+cd serial && make
+cd openmp && make
+cd mpi && make
+cd cuda && make
+cd hybrid && make
+```
+
 ### Terminal Visualization (UI)
 
 To watch the simulation live in your terminal, add the `-v` or `--visual` flag. 
@@ -42,7 +62,7 @@ To watch the simulation live in your terminal, add the `-v` or `--visual` flag.
 ```bash
 # Example: Serial with visualization
 cd serial
-./gol_serial 30 80 100 -v
+./gol_serial 30 80 100 -v`
 
 # Example: OpenMP with 4 threads and visualization
 cd ../openmp
@@ -80,6 +100,51 @@ cd ../cuda
 #### 5. Hybrid (MPI + OpenMP)
 ```bash
 cd ../hybrid
+make
+mpiexec -n 4 ./gol_hybrid 1000 1000 500 4
+```
+
+### Technique-Specific Run Commands
+
+#### Serial
+```bash
+cd serial
+make
+./gol_serial 30 80 100 -v
+./gol_serial 1000 1000 500
+```
+
+#### OpenMP
+```bash
+cd openmp
+make
+./gol_openmp 30 80 100 4 -v
+./gol_openmp 1000 1000 500 8
+```
+
+#### MPI
+```bash
+cd mpi
+make
+mpiexec -n 4 ./gol_mpi 30 80 100 -v
+mpiexec -n 4 ./gol_mpi 1000 1000 500
+```
+
+#### CUDA
+```bash
+cd cuda
+make
+./gol_cuda 30 80 100 -v
+./gol_cuda 1000 1000 500
+```
+
+#### Hybrid
+`hybrid/game_of_life_hybrid.c` is kept in version control, while the rest of the `hybrid/` folder can stay local-only.
+
+```bash
+cd hybrid
+make
+mpiexec -n 4 ./gol_hybrid 30 80 100 4 -v
 mpiexec -n 4 ./gol_hybrid 1000 1000 500 4
 ```
 
@@ -87,9 +152,4 @@ mpiexec -n 4 ./gol_hybrid 1000 1000 500 4
 To automatically compare all implementations:
 ```bash
 bash benchmark.sh
-<<<<<<< HEAD
 ```
-=======
-```
-=======
->>>>>>> 96aff32808efcc97c71ba406c274c3827faa3559
