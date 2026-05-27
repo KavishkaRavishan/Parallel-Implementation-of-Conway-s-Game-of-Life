@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Configuration
-ROWS=1000
-COLS=1000
-GENS=500
+ROWS=${1:-2000}
+COLS=${2:-2000}
+GENS=${3:-500}
 
 echo "Building all implementations..."
 make all
